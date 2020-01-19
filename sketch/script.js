@@ -18,10 +18,13 @@ let Xtext = `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 
 </svg>`
 
 
+
+
 function setup(){
     $(".game").hide();
     tiles = $(".cell")
-    socket = io.connect(window.location.hostname)
+    console.log(window.location.hostname)
+    socket = io.connect(window.location.hostname+":3000")
 
     socket.on("click", data => {
         let [i, j] = data.index
@@ -32,7 +35,7 @@ function setup(){
     socket.on("createdGame", id => gameId = id)
 
     socket.on("leftGame", () => {
-        
+
     })
 
     socket.on("err", data => {

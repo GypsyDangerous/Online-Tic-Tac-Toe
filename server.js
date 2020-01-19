@@ -69,6 +69,7 @@ io.sockets.on("connection", (socket) => {
         Game = new game()
         Game.add(socket)
         games.push(Game)
+        console.log(socket)
         socket.emit("createdGame", Game.id)
     });
 
