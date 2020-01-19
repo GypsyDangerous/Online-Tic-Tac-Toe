@@ -19,6 +19,7 @@ class game{
     constructor(){
         this.id = randomString(15)
         this.players = []
+        this.sockets = []
         this.turn = "o"
     }
 
@@ -29,6 +30,7 @@ class game{
     add(socket){
         if(!this.isFull()){
             this.players.push(socket.id)
+            this.sockets.push(socket)
             socket.join(this.id)
         }
     }
@@ -95,9 +97,12 @@ io.sockets.on("connection", (socket) => {
     socket.on("disconnect", () => {
         let g = gameFromPlayerID(id);
         if(g){
+            
             g.players.pop(g.players.indexOf(id));
             if(g.players.length == 0){
                 games.pop(games.indexOf(g))
+            }else{
+                g.emit(g.sockets[0], "leftGame")
             }
         }
     })
