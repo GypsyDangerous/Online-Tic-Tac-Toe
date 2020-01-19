@@ -32,7 +32,7 @@ function setup(){
     socket.on("createdGame", id => gameId = id)
 
     socket.on("leftGame", () => {
-
+        reset()
     })
 
     socket.on("err", data => {
