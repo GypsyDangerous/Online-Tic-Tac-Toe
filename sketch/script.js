@@ -31,6 +31,10 @@ function setup(){
 
     socket.on("createdGame", id => gameId = id)
 
+    socket.on("leftGame", () => {
+        
+    })
+
     socket.on("err", data => {
         if(data.error == "not found"){
             $(".input").show()
