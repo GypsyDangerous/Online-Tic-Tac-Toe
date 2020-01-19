@@ -1,0 +1,225 @@
+@import url('https://fonts.googleapis.com/css?family=Baloo+Bhai&display=swap');
+
+body, html{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.game-board{
+    width: 500px;
+    height: 500px;
+    display: grid;
+    
+}
+
+.game-area{
+    min-width: 500px;
+    min-height: 500px;
+    width: fit-content;
+    height: fit-content;
+    padding: 50px;
+    box-shadow: 0px 0px 14px 2px rgba(0, 0, 0, 0.75);
+    border-radius: 25px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* visibility: hidden; */
+}
+
+.extra-info{
+    margin-top: 10px;
+}
+
+.inner-info {
+    display: none;
+}
+
+.show {
+    display: block !important
+}
+
+.reset{
+    background-color: white;
+    color: black;
+    border: 2px solid #555555;
+    padding: 5px 10px 5px 10px;
+    border-radius: 7px;
+    outline: none;
+    height: 35px;
+    position: relative;
+    top: 10px;
+}
+
+.create-game{
+    /* border: outset; */
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.create-button, .join-button{
+    position: relative;
+    left: 20px;
+}
+
+.info {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-around;
+    border: inset thick;
+    border-radius: 10px;
+}
+
+h1, h2, p, button{
+    font-family: 'Baloo Bhai', cursive;
+}
+
+p{
+    margin-left: 20px;
+    display: inline-block;
+}
+
+.cell{
+    max-width: 170px;
+    min-width: 170px;
+    max-height: 170px;
+    min-height: 170px;
+    border-width: thick !important;
+}
+
+#a{
+    grid-column: 1;
+    grid-row: 1;
+}
+
+#b {
+    grid-column: 2;
+    grid-row: 1;
+    border-right: solid;
+    border-left: solid;
+}
+
+#c {
+    grid-column: 3;
+    grid-row: 1;
+}
+
+#d {
+    grid-column: 1;
+    grid-row: 2;
+    border-top: solid;
+    border-bottom: solid;
+}
+
+#e {
+    grid-column: 2;
+    grid-row: 2;
+    border: solid;
+}
+
+#f {
+    grid-column: 3;
+    grid-row: 2;
+    border-top: solid;
+    border-bottom: solid;
+}
+
+#g {
+    grid-column: 1;
+    grid-row: 3;
+}
+
+#h {
+    grid-column: 2;
+    grid-row: 3;
+    border-right: solid;
+    border-left: solid;
+}
+
+#i {
+    grid-column: 3;
+    grid-row: 3;
+}
+
+.bar {
+    width: 0;
+    height: 10px;
+    background: black;
+    margin: 10px;
+    border-radius: 24px;
+}
+
+.box {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    border: solid;
+    width: fit-content;
+    height: fit-content;
+    /* transform: translate(-30%, -150%) */
+}
+
+#one {
+    transform: translatey(20px) rotate(45deg);
+    animation: grow 1s forwards;
+}
+
+#two {
+    transform: rotate(-45deg);
+    animation: grow 1s .75s forwards;
+}
+
+.title{
+    width: 100%;
+    text-align: center;
+    font-size: 80px;
+    font-family: 'Baloo Bhai', cursive;
+    line-height: 10%;
+}
+
+@keyframes grow {
+    from {
+        stroke-dashoffset: 283;
+    }
+
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+circle {
+    fill: transparent;
+    stroke: #2f3d4c;
+    stroke-width: 5;
+    stroke-linecap: round;
+    stroke-dasharray: 283;
+    transform-origin: 50% 50%;
+    transform: scale(.65);
+    animation: grow .9s ease-in-out forwards;
+}
+
+.path {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 0;
+}
+
+.path.line {
+    stroke-dashoffset: 1000;
+    animation: dash 0.65s ease-in-out forwards;
+}
+
+.second {
+    animation-delay: 0.15s !important;
+}
+
+@keyframes dash {
+    0% {
+        stroke-dashoffset: 1000;
+    }
+
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+

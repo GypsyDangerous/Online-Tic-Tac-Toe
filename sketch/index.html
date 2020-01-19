@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <h1 class="title">Tic Tac Toe</h1>
+    <div class="game-area" id="game">
+        <span class="game">
+            <div class="game-board">
+                <div class="cell" id = "a"></div>
+                <div class="cell" id = "b"></div>
+                <div class="cell" id = "c"></div>
+                <div class="cell" id = "d"></div>
+                <div class="cell" id = "e"></div>
+                <div class="cell" id = "f"></div>
+                <div class="cell" id = "g"></div>
+                <div class="cell" id = "h"></div>
+                <div class="cell" id=  "i"></div>
+            </div>
+            <div class="info">
+            <button class="reset" onclick="reset()">Reset</button>
+            <p class="winner">Winner: </p>
+            <p class="myturn"></p>
+            <p class="turn">X's Turn</p>
+            </div>
+            <div class="extra-info">
+                <button class="info-button">Show/Hide Extra Game Info</button>
+                <div class="inner-info">
+                    <p class="id">Game ID: </p>
+                </div>
+            </div>
+        </span>
+        <span class="input">
+            <h2>Create Game</h2>
+            <div class="create-game">
+                <p>Name:</p>
+                <input id = "create-name" type="text" required>
+                <br>
+                <button class="create-button">Create Game</button>
+            </div>
+            <h2>Join Game</h2>
+            <div class="join-game">
+                <p>Name:</p>
+                <input id="join-name" type="text" required>
+                <br>
+                <p>Game ID:</p>
+                <input id="game-id" type="text" required>
+                <br>
+                <button class="join-button">Join Game</button>
+            </div>
+        </span>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
