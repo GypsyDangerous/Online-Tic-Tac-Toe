@@ -21,7 +21,7 @@ let Xtext = `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 
 function setup(){
     $(".game").hide();
     tiles = $(".cell")
-    socket = io.connect("http://localhost:3000")
+    socket = io.connect(window.location.hostname)
 
     socket.on("click", data => {
         let [i, j] = data.index
