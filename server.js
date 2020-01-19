@@ -61,8 +61,9 @@ io.sockets.on("connection", (socket) => {
     const id = socket.id;
 
     socket.on("click", (data) => {
-        let {index, player} = data;
-        Game.emit(socket, "click", {index, player})
+        if(game.isFull()){
+            Game.emit(socket, "click", data)
+        }
     })
 
     socket.on("createGame", data => {
