@@ -17,14 +17,11 @@ let Xtext = `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 
   <line class="path line second" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="95.8" y1="38" x2="34.4" y2="92.2"/>
 </svg>`
 
-port = process.env.PORT || 3000
-
-
 function setup(){
     $(".game").hide();
     tiles = $(".cell")
-    console.log(window.location.hostname)
-    socket = io.connect(window.location.hostname+":"+port)
+    socket = io.connect(window.location.hostname)
+    console.log(socket)
 
     socket.on("click", data => {
         let [i, j] = data.index
