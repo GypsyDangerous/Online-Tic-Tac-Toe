@@ -20,6 +20,7 @@ class game{
         this.id = randomString(15)
         this.players = []
         this.sockets = []
+        this.names = {}
         this.turn = "o"
     }
 
@@ -27,10 +28,11 @@ class game{
         return this.players.length >= 2
     }
 
-    add(socket){
+    add(socket, name){
         if(!this.isFull()){
             this.players.push(socket.id)
             this.sockets.push(socket)
+            this.names[socket.id] = name
             socket.join(this.id)
         }
     }
@@ -70,7 +72,7 @@ io.sockets.on("connection", (socket) => {
 
     socket.on("createGame", data => {
         Game = new game()
-        Game.add(socket)
+        Game.add(socket, data.name)
         games.push(Game)
         console.log(socket)
         socket.emit("createdGame", Game.id)
