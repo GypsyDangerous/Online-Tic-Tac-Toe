@@ -61,7 +61,7 @@ io.sockets.on("connection", (socket) => {
     const id = socket.id;
 
     socket.on("click", (data) => {
-        if(game.isFull()){
+        if(Game.isFull()){
             Game.emit(socket, "click", data)
         }
     })
