@@ -67,6 +67,7 @@ const io = socket(server);
 io.sockets.on("connection", (socket) => {
     let Game;
     const id = socket.id;
+    let name;
 
     socket.on("click", (data) => {
         if(Game.isFull()){
@@ -77,6 +78,7 @@ io.sockets.on("connection", (socket) => {
     socket.on("createGame", data => {
         Game = new game()
         Game.add(socket, data.name)
+        name = data.name
         games.push(Game)
         socket.emit("createdGame", Game.id)
         Game.emit(socket, "message", capitalize(data.name) + " Created the game")
@@ -92,6 +94,7 @@ io.sockets.on("connection", (socket) => {
             Game.add(socket)
             socket.broadcast.to(Game.id).emit("getPlayer", {})
             Game.emit(socket, "message", capitalize(data.name) + " Joined the game")
+            name = data.name
         }else{
             socket.emit("err", {error: "not found", msg: "There is no open game available width id: " + data.id})
         }
@@ -113,7 +116,7 @@ io.sockets.on("connection", (socket) => {
                 games.pop(games.indexOf(g))
             }else{
                 g.emit(g.sockets[0], "leftGame")
-                g.emit(g.sockets[0], "message", capitalize(g.names[id])+ " left the game")
+                g.emit(g.sockets[0], "message", capitalize(name)+ " left the game")
             }
         }
     })
