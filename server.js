@@ -15,6 +15,11 @@ function randomString(n) {
     return [...Array(n)].map(i => (~~(Math.random() * 36)).toString(36)).join('')
 }
 
+const capitalize = (s) => {
+    if (typeof s !== 'string') return ''
+    return s.charAt(0).toUpperCase() + s.slice(1)
+}
+
 class game{
     constructor(){
         this.id = randomString(15)
@@ -59,7 +64,6 @@ app.use(express.static("sketch"))
 
 const io = socket(server);
 
-let connectCounter = 0
 io.sockets.on("connection", (socket) => {
     let Game;
     const id = socket.id;
@@ -74,8 +78,8 @@ io.sockets.on("connection", (socket) => {
         Game = new game()
         Game.add(socket, data.name)
         games.push(Game)
-        console.log(socket)
         socket.emit("createdGame", Game.id)
+        Game.emit(socket, "message", capitalize(data.name) + " Created the game")
     });
 
     socket.on("getPlayer", player => {
@@ -87,6 +91,7 @@ io.sockets.on("connection", (socket) => {
         if (Game && !Game.isFull()){
             Game.add(socket)
             socket.broadcast.to(Game.id).emit("getPlayer", {})
+            Game.emit(socket, "message", capitalize(data.name) + " Joined the game")
         }else{
             socket.emit("err", {error: "not found", msg: "There is no open game available width id: " + data.id})
         }
@@ -96,15 +101,19 @@ io.sockets.on("connection", (socket) => {
         Game.emit(socket, "reset")
     })
 
+    socket.on("message", msg => {
+        Game.emit(socket, "message", msg, false)
+    })
+
     socket.on("disconnect", () => {
-        let g = gameFromPlayerID(id);
+        let g = Game;
         if(g){
-            
             g.players.pop(g.players.indexOf(id));
             if(g.players.length == 0){
                 games.pop(games.indexOf(g))
             }else{
                 g.emit(g.sockets[0], "leftGame")
+                g.emit(g.sockets[0], "message", capitalize(g.names[id])+ " left the game")
             }
         }
     })

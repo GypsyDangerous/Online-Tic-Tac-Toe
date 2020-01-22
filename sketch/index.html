@@ -7,12 +7,14 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/addons/p5.sound.min.js"></script>
     <link rel="stylesheet" href="style.css">
     <title>Tic Tac Toe</title>
 </head>
 <body>
     <h1 class="title">Tic Tac Toe</h1>
-    <div class="game-area" id="game">
+    <div class="game-area expand" id="game">
         <span class="game">
             <div class="game-board">
                 <div class="cell" id = "a"></div>
@@ -26,10 +28,10 @@
                 <div class="cell" id=  "i"></div>
             </div>
             <div class="info">
-            <button class="reset" onclick="reset()">Reset</button>
-            <p class="winner">Winner: </p>
-            <p class="myturn"></p>
-            <p class="turn">X's Turn</p>
+                <button class="reset" onclick="reset()">Reset</button>
+                <p class="winner">Winner: </p>
+                <p class="myturn"></p>
+                <p class="turn">X's Turn</p>
             </div>
             <div class="extra-info">
                 <button class="info-button">Show/Hide Extra Game Info</button>
@@ -57,6 +59,13 @@
                 <button class="join-button">Join Game</button>
             </div>
         </span>
+    </div>
+    <div class="chat-area" id="chat">
+        <div class="messages" id="messages"></div>
+        <div class="messenger">
+            <input type="text" class="msg-input" placeholder="Enter Message">
+            <button class="send">Send</button>
+        </div>
     </div>
     
     <script src="script.js"></script>
