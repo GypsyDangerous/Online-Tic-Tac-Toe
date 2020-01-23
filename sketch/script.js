@@ -208,10 +208,7 @@ $(".create-button").click(function () {
     let name = $("#create-name").val()
     name = escapeHtml(name)
     if(name){
-        data = {
-            name: name
-        }
-        socket.emit("createGame", data)
+        socket.emit("createGame", {name})
         $(".input").hide()
         $(".game").show();
         $(".chat-area").show();
@@ -246,11 +243,9 @@ $(".join-button").click(function () {
     }
 })
 
-
 function addMsg(msg){
     createDiv(escapeHtml(msg)).addClass("message").parent("messages")
 }
-
 
 $(".info-button").click(function () {
     $(".inner-info").toggleClass("show")
