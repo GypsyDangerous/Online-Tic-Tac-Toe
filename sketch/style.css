@@ -36,6 +36,8 @@ body{
     }
 }
 
+/* give the whole webpage the imported font */
+
 * {
     font-family: 'Baloo Bhai',cursive;
 }
