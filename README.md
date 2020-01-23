@@ -1,2 +1,2 @@
 ﻿# Online-Tic-Tac-Toe
-Baloo Bhai http://ticonlinetactoe.herokuapp.com/
+Online multiplayer tic tac toe game made with websockets and express http://ticonlinetactoe.herokuapp.com/
