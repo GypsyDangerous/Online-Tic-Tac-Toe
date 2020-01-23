@@ -1,5 +1,3 @@
-$(document).ready(setup)
-
 let tiles;
 let gameTiles = []
 let gameReady = false
@@ -15,67 +13,82 @@ const capitalize = (s) => {
     return s.charAt(0).toUpperCase() + s.slice(1)
 }
 
+const index = (i, j) => {
+    return 3*i+j
+}
+
+// html that will be injected in the cells for the 'x' and 'o' animation
 const Otext = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="45" /></svg>`
 
-let Xtext = `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+const Xtext = `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
   <line class="path line" fill="none" stroke="#FF0000" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="34.4" y1="37.9" x2="95.8" y2="92.3"/>
   <line class="path line second" fill="none" stroke="#FF0000" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="95.8" y1="38" x2="34.4" y2="92.2"/>
 </svg>`
 
+// function that executes on page load
 function setup(){
+    // prevent p5 from adding a canvas to the window
     noCanvas();
+
+    // these divs should be hidden until the game starts
     $(".game").hide();
     $(".chat-area").hide();
-    tiles = $(".cell")
-    socket = io.connect(window.location.hostname)
-    console.log(socket)
 
+    // shorthand for all items with 'cell' class
+    tiles = $(".cell")
+
+    // connect to socket
+    socket = io.connect(window.location.hostname)
+
+    // add a message received from the server to the chat area
     socket.on("message", msg => {
         addMsg(msg)
     })
 
+    // set a tile with an i and j, and an 'x' or 'o' based on data from the server
     socket.on("click", data => {
         let [i, j] = data.index
         move(tiles[index(j, i)], data.player)
         turn = data.player == "x" ? "o" : "x";
     }) 
 
+    // set the local gameId from the id received from the server
     socket.on("createdGame", id => gameId = id)
 
-    socket.on("leftGame", () => {
-        reset()
-    })
 
+    // reset the game if the other person leaves the game
+    socket.on("leftGame", reset)
+
+    // alert the user to an error if the server sends one
     socket.on("err", data => {
         if(data.error == "not found"){
+            // a game wasn't found so rehide these things
             $(".input").show()
             $(".game").hide();
-            myTurn = null
-            $(".myturn").html("")
         }
         setTimeout(() => {
             alert(data.msg)
         }, 150);
     })
 
+    // send the server which player you are when asked
     socket.on("getPlayer", () => {
         socket.emit("getPlayer", myTurn)
     })
 
+    // set my player based on data from the server
     socket.on("setPlayer", player => {
         myTurn = player
         $(".myturn").html(myname + ", You Are "+player.toUpperCase())
     })
 
-    socket.on("redirect", url => window.location.replace(url))
-
+    // try to reset the game if the server tells you to
     socket.on("reset", () => {
         reset(false)
     })
-
-    socket.open()
 }
 
+// get the i and j position of a tile
 function getIndex(tile){
     let i = Number($(tile).css("grid-column")[0])-1
     let j = Number($(tile).css("grid-row")[0])-1
@@ -83,6 +96,7 @@ function getIndex(tile){
 }
 
 function reset(clicked = true){
+    // only reset when game is over
     if(gameOver){
         for (let t of tiles){
             t = $(t)
@@ -99,6 +113,7 @@ function reset(clicked = true){
     }
 }
 
+// get all the values from the cells to be used the in the winner function
 function getvals(){
     let r = []
     for(let t of tiles){
@@ -157,9 +172,6 @@ function winner(){
     return values.filter((v) => v == "").length == 0? "tie": undefined
 }
 
-function index(i, j){
-    return 3*i+j
-}
 
 function move(tile, player){
     if ($(tile).html() == "") {

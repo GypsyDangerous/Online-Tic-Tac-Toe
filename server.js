@@ -1,17 +1,15 @@
 const express = require("express")
 const socket = require("socket.io")
+
 const app = express()
+app.use(express.static("sketch"))
 
 Port = process.env.PORT || 3000
 
-const server = app.listen(Port)
+const server = app.listen(Port, () => console.log("Server running on port: "+Port))
 
-console.log("Server Running on Port " + Port)
-
-const max = Math.max
-const int = Math.floor
-
-function randomString(n) {
+// misc functions for generating a random string and for capitalizing the first letter of a work
+const randomString = (n) => {
     return [...Array(n)].map(i => (~~(Math.random() * 36)).toString(36)).join('')
 }
 
@@ -50,23 +48,24 @@ class game{
     }
 }
 
-let games = []
-
-const gameFromPlayerID = (id) => {
-    return games.find(g => g.players.includes(id))
-}
 
 const gameFromId = (id) => {
     return games.find(g => g.id == id)
 }
 
-app.use(express.static("sketch"))
 
+const games = []
 const io = socket(server);
 
 io.sockets.on("connection", (socket) => {
+
+    //game this socket is in
     let Game;
+
+    // shorthand for this sockets id
     const id = socket.id;
+
+    // name of user who will connect to this socket
     let name;
 
     socket.on("click", (data) => {
@@ -91,8 +90,8 @@ io.sockets.on("connection", (socket) => {
     socket.on("JoinGame", data => {
         Game = gameFromId(data.id)
         if (Game && !Game.isFull()){
-            Game.add(socket)
-            socket.broadcast.to(Game.id).emit("getPlayer", {})
+            Game.add(socket, data.name)
+            Game.emit(socket, "getPlayer",)
             Game.emit(socket, "message", capitalize(data.name) + " Joined the game")
             name = data.name
         }else{
