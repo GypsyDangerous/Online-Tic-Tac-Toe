@@ -49,7 +49,7 @@ function setup(){
     socket.on("click", data => {
         let [i, j] = data.index
         move(tiles[index(j, i)], data.player)
-        turn = data.player == "x" ? "o" : "x";
+        turn = data.player === "x" ? "o" : "x";
     }) 
 
     // set the local gameId from the id received from the server
@@ -61,7 +61,7 @@ function setup(){
 
     // alert the user to an error if the server sends one
     socket.on("err", data => {
-        if(data.error == "not found"){
+        if(data.error === "not found"){
             // a game wasn't found so rehide these things
             $(".input").show()
             $(".game").hide();
@@ -100,13 +100,16 @@ function reset(clicked = true){
     if(gameOver){
         for (let t of tiles){
             t = $(t)
+            // clear the values and innerhtml for all the cells
             t.val("")
             t.html("")
         }
+        // clear the winner and set it to x's turn cause x goes first
         $(".winner").html("Winner: ")
         $(".turn").html("X's Turn")
         turn = "x"
         gameOver = false
+        // if the button on the webpage was clicked, send a message for others to reset, if I received a message to reset then don't
         if(clicked) {
             socket.emit("reset")
         }
@@ -169,15 +172,15 @@ function winner(){
         }
         if (sideways) return first
     }
-    return values.filter((v) => v == "").length == 0? "tie": undefined
+    return values.filter((v) => v === "").length === 0? "tie": undefined
 }
 
 
 function move(tile, player){
-    if ($(tile).html() == "") {
-        $(tile).html(player == "o" ? Otext : Xtext)
+    if ($(tile).html() === "") {
+        $(tile).html(player === "o" ? Otext : Xtext)
         $(tile).val(player)
-        player = player == "x" ? "o" : "x"
+        player = player === "x" ? "o" : "x"
         $(".turn").html(player.toUpperCase()+"'s Turn")
     }
     if (winner()) {
@@ -186,8 +189,9 @@ function move(tile, player){
     }
 }
 
+// when a cell div is clicked figure out if it already has a move there and if not send a message telling all sockets to set a move there
 $('.cell').click(function () {
-    if ($(this).html() == "" && turn == myTurn && !gameOver) {
+    if ($(this).html() === "" && turn === myTurn && !gameOver) {
         let index = getIndex(this)
         let player = turn
         console.log("clicked")
@@ -195,6 +199,7 @@ $('.cell').click(function () {
     }
 });
 
+// prevent XSS
 function escapeHtml(unsafe) {
     return unsafe
         .replace(/&/g, "&amp;")
@@ -203,6 +208,7 @@ function escapeHtml(unsafe) {
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
 }
+
 
 $(".create-button").click(function () {
     let name = $("#create-name").val()
@@ -243,14 +249,17 @@ $(".join-button").click(function () {
     }
 })
 
+// add a message the chat area div
 function addMsg(msg){
     createDiv(escapeHtml(msg)).addClass("message").parent("messages")
 }
 
+// toggle hiding and showing the extra game info that is currently only the game id
 $(".info-button").click(function () {
     $(".inner-info").toggleClass("show")
 })
 
+// send a message if there is one to send when the 'send' button is pressed
 $(".send").click(() => {
     let msg = $(".msg-input").val()
     if(msg){
@@ -260,6 +269,7 @@ $(".send").click(() => {
     }
 })
 
+// link the enter key to sending a message
 $(document).keyup(function (event) {
     if (event.keyCode === 13) {
         $(".send").click();
