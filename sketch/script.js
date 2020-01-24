@@ -39,6 +39,9 @@ function setup(){
 
     // connect to socket
     socket = io.connect(window.location.hostname)
+    if(!socket){
+        socket = io.connect(window.location.hostname+":3000")
+    }
 
     // add a message received from the server to the chat area
     socket.on("message", msg => {

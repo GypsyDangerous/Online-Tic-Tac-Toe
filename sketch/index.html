@@ -8,11 +8,12 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/p5.js"></script>
+    
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="style.css">
     <title>Tic Tac Toe</title>
 </head>
 <body>
-    
     <h1 class="title">Tic Tac Toe</h1>
     <div class="game-area expand" id="game">
         <span class="game">
@@ -50,20 +51,17 @@
         <span class="input">
             <h2>Create Game</h2>
             <div class="create-game">
-                <p>Name:</p>
-                <input id = "create-name" class="form" type="text" required>
+                <label>Name:<input id = "create-name" class="form" type="text" placeholder="Name" required></label>
                 <br>
-                <button class="create-button">Create Game</button>
+                <button class="form-button create-button">Create Game</button>
             </div>
             <h2>Join Game</h2>
             <div class="join-game">
-                <p>Name:</p>
-                <input id="join-name" class="form" type="text" required>
+                <label>Name:<input id="join-name" class="form" placeholder="Name" type="text" required></label>
                 <br>
-                <p>Game ID:</p>
-                <input id="game-id" class="form" type="text" required>
+                <label>Game ID:<input id="game-id" class="form" type="text" placeholder="ID" required></label>
                 <br>
-                <button class="join-button">Join Game</button>
+                <button class="form-button join-button">Join Game</button>
             </div>
         </span>
     </div>
@@ -78,7 +76,7 @@
     </div>
 
     <!-- signature -->
-    <p class="sign">Made with ❤️ By <a id="twitter" href="https://twitter.com/Snyderling_">David Snyder</a></p>
+    <p class="sign">Made with ❤️ By <a id="twitter" target="_blank" href="https://twitter.com/Snyderling_">David Snyder</a></p>
     <script src="script.js"></script>
 </body>
 </html>

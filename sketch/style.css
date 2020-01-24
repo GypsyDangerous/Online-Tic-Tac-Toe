@@ -38,11 +38,11 @@ body{
     }
 }
 
-@media (max-width: 365px){
+/* @media (max-width: 365px){
     .form{
         width: 50%;
     }
-}
+} */
 
 * {
     font-family: 'Baloo Bhai',cursive;
@@ -54,6 +54,16 @@ body{
     width: 500px;
     height: 500px;
     display: grid;
+}
+
+.form{
+    width: 100%;
+    max-width: 500px;
+    box-sizing: border-box;
+}
+
+.form-button{
+    margin-top: 1%;
 }
 
 /* The main div that contains the gameboard and info */
@@ -173,11 +183,6 @@ body{
 .create-game{
     padding: 5px;
     border-radius: 5px;
-}
-
-.create-button, .join-button{
-    position: relative;
-    left: 20px;
 }
 
 .info {
