@@ -99,23 +99,27 @@ io.sockets.on("connection", (socket) => {
         }
     })
 
+    // send a message to clients in the game to reset
     socket.on("reset", () => {
         Game.emit(socket, "reset")
     })
 
+    // send a message to the other client in the game with a chat message
     socket.on("message", msg => {
         Game.emit(socket, "message", msg, false)
     })
 
     socket.on("disconnect", () => {
-        let g = Game;
-        if(g){
-            g.players.pop(g.players.indexOf(id));
-            if(g.players.length == 0){
-                games.pop(games.indexOf(g))
+        /* remove the player from the game,
+           delete the game if it is empty 
+           and if not send messages to the other client to reset and add a message announcing the player leaveing */
+        if (Game){
+            Game.players.pop(Game.players.indexOf(id));
+            if (Game.players.length === 0){
+                games.pop(games.indexOf(Game))
             }else{
-                g.emit(g.sockets[0], "leftGame")
-                g.emit(g.sockets[0], "message", capitalize(name)+ " left the game")
+                Game.emit(Game.sockets[0], "leftGame")
+                Game.emit(Game.sockets[0], "message", capitalize(name)+ " left the game")
             }
         }
     })

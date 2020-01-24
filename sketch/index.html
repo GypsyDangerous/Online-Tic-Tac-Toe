@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Play tic tac toe with your friends on this online multiplayer game of tic tac toe. This game will not be detected by game blockers so it is unblocked">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/p5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/addons/p5.sound.min.js"></script>
     <link rel="stylesheet" href="style.css">
     <title>Tic Tac Toe</title>
 </head>
 <body>
+    
     <h1 class="title">Tic Tac Toe</h1>
     <div class="game-area expand" id="game">
         <span class="game">
+            <!-- Actual tic tac toe game -->
             <div class="game-board">
                 <div class="cell" id = "a"></div>
                 <div class="cell" id = "b"></div>
@@ -27,12 +28,16 @@
                 <div class="cell" id = "h"></div>
                 <div class="cell" id=  "i"></div>
             </div>
+
+            <!-- Game info -->
             <div class="info">
                 <button class="reset" onclick="reset()">Reset</button>
                 <p class="winner">Winner: </p>
                 <p class="myturn"></p>
                 <p class="turn">X's Turn</p>
             </div>
+
+            <!-- extra game info, curently only the game id -->
             <div class="extra-info">
                 <button class="info-button">Show/Hide Extra Game Info</button>
                 <div class="inner-info">
@@ -40,6 +45,8 @@
                 </div>
             </div>
         </span>
+
+        <!-- main input screen -->
         <span class="input">
             <h2>Create Game</h2>
             <div class="create-game">
@@ -60,6 +67,8 @@
             </div>
         </span>
     </div>
+
+    <!-- Chat area -->
     <div class="chat-area" id="chat">
         <div class="messages" id="messages"></div>
         <div class="messenger">
@@ -67,7 +76,9 @@
             <button class="send">Send</button>
         </div>
     </div>
-    <p class="sign">Made with ❤️ By David Snyder</p>
+
+    <!-- signature -->
+    <p class="sign">Made with ❤️ By <a id="twitter" href="https://twitter.com/Snyderling_">David Snyder</a></p>
     <script src="script.js"></script>
 </body>
 </html>
